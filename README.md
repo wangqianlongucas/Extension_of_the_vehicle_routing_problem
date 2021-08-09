@@ -6,4 +6,4 @@
 ## 2 经典文献及其模型实现
 ## 3 主流算法实现
 ## 4 个人公众号
-![二维码]:C://Users/Administrator/Desktop/公众号/公众号图片/线下物料素材/搜一搜公众号推广物料图片-png/扫码_搜索联合传播样式-白色版.png
+![](https://github.com/wangqianlongucas/Extension_of_the_vehicle_routing_problem/blob/Extension_of_the_vehicle_routing_problem/%E5%85%AC%E4%BC%97%E5%8F%B7/%E6%89%AB%E7%A0%81_%E6%90%9C%E7%B4%A2%E8%81%94%E5%90%88%E4%BC%A0%E6%92%AD%E6%A0%B7%E5%BC%8F-%E7%99%BD%E8%89%B2%E7%89%88.png)
