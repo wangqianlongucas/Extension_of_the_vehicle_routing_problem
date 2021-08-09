@@ -79,7 +79,7 @@ def constraints(model, X, S, L, Z, model_inputdata):
 
 if __name__ == '__main__' :
     # 初始化数据
-    path_of_file = 'C:\\Users\\Administrator\\Desktop\\公众号\\模型复现\\2006-Stefan\\test_data'
+    path_of_file = 'F:\\Extension_of_the_vehicle_routing_problem\\PDPTW\\test_data'
     number_of_orders, number_of_trucks = 10, 2
     model_inputdata = Model_inputdata(path_of_file, number_of_orders, number_of_trucks)
     # 建立模型

@@ -96,6 +96,6 @@ def data_generate(data_parameter):
     log_generate(data_parameter)
 
 if __name__ == '__main__' :
-    path_of_file = 'C:\\Users\\Administrator\\Desktop\\公众号\\模型复现\\2006-Stefan\\test_data'
+    path_of_file = 'F:\\Extension_of_the_vehicle_routing_problem\\PDPTW\\test_data'
     data_parameter = Data_parameter(path_of_file)
     data_generate(data_parameter)
