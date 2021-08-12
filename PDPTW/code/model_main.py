@@ -2,9 +2,9 @@
 # @author: wangqianlong
 # @email: 1763423314@qq.com
 # @date: 2021/08/08
-# 本模块为模型建立及优化部分
-# 求解速度和规模待测试
 
+# 本模块为模型建立及优化部分
+# model_main.py
 import math as m
 import matplotlib.pyplot as plt
 from gurobipy import *

@@ -2,8 +2,9 @@
 # @author: wangqianlong
 # @email: 1763423314@qq.com
 # @date: 2021/06/23
-# 本模块将负责模型及算法结果输出：输出为文件，可视化等。
 
+# 本模块将负责模型及算法结果输出：输出为文件，可视化等。
+# output.py
 import matplotlib.pyplot as plt
 
 # 模型求解结果可视化

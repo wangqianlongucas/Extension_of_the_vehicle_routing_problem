@@ -2,8 +2,10 @@
 # @author: wangqianlong
 # @email: 1763423314@qq.com
 # @date: 2021/08/08
-# 本模块为模型数据结构定义
 
+
+# 本模块为模型数据结构定义
+# model_data.py
 import pandas as pd
 
 # 异质化卡车
