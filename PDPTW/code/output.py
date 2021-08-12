@@ -29,3 +29,18 @@ def model_output_picture(X,model_inputdata,output_picture_path, number_of_orders
     plt.savefig(output_picture_path + '\\%s-%s.png'%(number_of_orders, number_of_trucks), dpi=600)
     plt.show()
 
+def model_output_txt(X, S, L, Z, obj_arph, obj_beita, obj_gama, model_inputdata, output_txt_path):
+    output_txt_name = output_txt_path + '\\log-%s-%s.txt' % (model_inputdata.number_of_orders, model_inputdata.number_of_trucks)
+    with open(output_txt_name, 'w') as txt:
+        txt.write('obj_arph = %s, obj_beita = %s, obj_gama = %s\n' % (obj_arph.getValue(), obj_beita.getValue(), obj_gama.getValue()))
+        for i in model_inputdata.V:
+            for j in model_inputdata.V:
+                for k in model_inputdata.K:
+                    if X[i, j, k].x > 0.9:
+                        txt_write = 'X[%s,%s,%s] = 1' % (i, j, k.id)
+                        txt_write += '  S[%s,%s] = %s' % (i, k.id, S[i, k].x)
+                        txt_write += '  L[%s,%s] = %s\n' % (i, k.id, L[i, k].x)
+                        txt.write(txt_write)
+        for i in model_inputdata.P:
+            if Z[i].x >= 0.9:
+                txt.write('Z[%s] = 1    ' % i)

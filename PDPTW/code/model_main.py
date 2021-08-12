@@ -80,7 +80,7 @@ def constraints(model, X, S, L, Z, model_inputdata):
 if __name__ == '__main__' :
     # 初始化数据
     path_of_file = 'F:\\Extension_of_the_vehicle_routing_problem\\PDPTW\\test_data'
-    number_of_orders, number_of_trucks = 10, 2
+    number_of_orders, number_of_trucks = 13, 2
     model_inputdata = Model_inputdata(path_of_file, number_of_orders, number_of_trucks)
     # 建立模型
     model = Model('model')
@@ -107,6 +107,8 @@ if __name__ == '__main__' :
         # 可视化
         output_picture_path = path_of_file
         model_output_picture(X, model_inputdata, output_picture_path, number_of_orders, number_of_trucks)
+        output_txt_path = path_of_file
+        model_output_txt(X, S, L, Z, obj_arph, obj_beita, obj_gama, model_inputdata, output_txt_path)
         print('(', obj_arph.getValue(), ',', obj_beita.getValue(), ',', obj_gama.getValue(), ')', t_e - t_s)
         # 输出lp文件
         model.write('model.lp')
