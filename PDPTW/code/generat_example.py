@@ -11,9 +11,9 @@ import math
 class Data_parameter():
     def __init__(self,path_of_file):
         # 需求数量
-        self.number_of_orders = 10  # 个
+        self.number_of_orders = 13  # 个
         # 卡车数量
-        self.number_of_trucks = 2  # 梁
+        self.number_of_trucks = 2  # 辆
         # 需求分布半径，直径为2*R
         self.R = 3  # 千米
         # 需求时间窗长度
