@@ -8,6 +8,7 @@
 # model_data.py
 import pandas as pd
 
+
 # 异质化卡车
 class Truck():
     # 初始化
@@ -22,13 +23,14 @@ class Truck():
         self.N_k = self.P_k + self.D_k
         self.V_k = self.N_k + [self.T_k_start, self.T_k_end]
 
+
 class Model_inputdata():
     # 初始化：读取数据和生成参数
     def __init__(self,path_of_file, number_of_orders, number_of_trucks):
         # 读取需求数据和节点数据
-        self.orders = pd.read_csv(path_of_file + '\\orders-%s.csv'%number_of_orders, index_col=0)
+        self.orders = pd.read_csv(path_of_file + '//orders-%s.csv'%number_of_orders, index_col=0)
         # Nodes[0]表示无人机服务站,Nodes[-1]表示配送员出发点
-        self.nodes = pd.read_csv(path_of_file + '\\Nodes-%s-%s.csv'%(number_of_orders, number_of_trucks), index_col=0)
+        self.nodes = pd.read_csv(path_of_file + '//Nodes-%s-%s.csv'%(number_of_orders, number_of_trucks), index_col=0)
         # 需求初始化
         # Pickup节点
         self.P = list(self.orders['Pickup'])

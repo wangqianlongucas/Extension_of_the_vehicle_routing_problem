@@ -12,10 +12,12 @@ from model_data import *
 from output import *
 import time
 
+
 # 初始化模型参数函数
 def model_initial_parameter(model,model_inputdata):
     model.Params.TimeLimit = 600
     model.Params.MIPGap = 0.2 / model_inputdata.M[1]
+
 
 # 模型变量添加函数
 def add_vars(model,model_inputdata):
@@ -24,6 +26,7 @@ def add_vars(model,model_inputdata):
     L = model.addVars(model_inputdata.V, model_inputdata.K, vtype=GRB.CONTINUOUS, name='L')
     Z = model.addVars(model_inputdata.P, vtype=GRB.BINARY, name='Z')
     return X, S, L, Z
+
 
 # 模型目标设置函数
 def set_objective(model, X, S, Z, model_inputdata):
@@ -37,18 +40,32 @@ def set_objective(model, X, S, Z, model_inputdata):
     model.setObjective(obj,GRB.MINIMIZE)
     return obj_arph, obj_beita, obj_gama
 
+
 # 约束条件
 def orders_been_service_or_in_request_bank(model, X, Z, model_inputdata):
-    model.addConstrs(quicksum(X[i, j, k] for k in model_inputdata.order_ks[i] for j in k.N_k) + Z[i] == 1 for i in model_inputdata.P)
+    # 约束添加方式 1
+    # model.addConstrs(quicksum(X[i, j, k] for k in model_inputdata.order_ks[i] for j in k.N_k) + Z[i] == 1 for i in model_inputdata.P)
+    # 约束添加方式 2
+    for i in model_inputdata.P:
+        x_jk_sum = 0
+        for k in model_inputdata.order_ks[i]:
+            for j in k.N_k:
+                x_jk_sum += X[i, j, k]
+        model.addConstr(x_jk_sum + Z[i] == 1, name=f'cons_order_0_{i}')
+        # model.addConstr(x_jk_sum + Z[i] == 0, name=f'cons_order_1_{i}')
+
+
 
 def pickup_and_delivery_been_same_truck(model, X, model_inputdata):
     model.addConstrs(
         quicksum(X[i, j, k] for j in k.V_k) - quicksum(X[j, i + model_inputdata.number_of_orders, k] for j in k.V_k) == 0 for k in model_inputdata.K for i in k.P_k)
 
+
 def start_end_flow_balance(model, X, model_inputdata):
     model.addConstrs(quicksum(X[k.T_k_start, j, k] for j in k.P_k + [k.T_k_end]) == 1 for k in model_inputdata.K)
     model.addConstrs(quicksum(X[i, k.T_k_end, k] for i in k.D_k + [k.T_k_start]) == 1 for k in model_inputdata.K)
     model.addConstrs(quicksum(X[i, j, k] for i in k.V_k) - quicksum(X[j, i, k] for i in k.V_k) == 0 for k in model_inputdata.K for j in k.N_k)
+
 
 def time_limit(model, X, S, model_inputdata):
     model.addConstrs(S[i, k] + model_inputdata.nodes.loc[i].st + m.sqrt(
@@ -58,8 +75,10 @@ def time_limit(model, X, S, model_inputdata):
     model.addConstrs(S[i, k] == [model_inputdata.nodes.loc[i].a, model_inputdata.nodes.loc[i].b] for k in model_inputdata.K for i in k.V_k)
     # 此处不用大于等于0的约束，order.a 大于等于0
 
+
 def pickup_befor_delivery(model, S, model_inputdata):
     model.addConstrs(S[i, k] <= S[i + model_inputdata.number_of_orders, k] for k in model_inputdata.K for i in k.P_k)
+
 
 def weight_limit(model, X, L, model_inputdata):
     model.addConstrs(L[i, k] + model_inputdata.nodes.loc[i].dm <= L[j, k] + (1 - X[i, j, k]) * model_inputdata.M[1] for k in model_inputdata.K for i in k.V_k for j in k.V_k)
@@ -69,6 +88,7 @@ def weight_limit(model, X, L, model_inputdata):
     # model.addConstrs(L[k.T_k_start, k] == 0 for k in model_inputdata.K)
     # model.addConstrs(L[k.T_k_end, k] == 0 for k in model_inputdata.K)
 
+
 def constraints(model, X, S, L, Z, model_inputdata):
     orders_been_service_or_in_request_bank(model, X, Z, model_inputdata)
     pickup_and_delivery_been_same_truck(model, X, model_inputdata)
@@ -76,6 +96,7 @@ def constraints(model, X, S, L, Z, model_inputdata):
     time_limit(model, X, S, model_inputdata)
     pickup_befor_delivery(model, S, model_inputdata)
     weight_limit(model, X, L, model_inputdata)
+
 
 if __name__ == '__main__' :
     # 初始化数据
